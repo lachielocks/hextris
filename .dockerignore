@@ -1,0 +1,13 @@
+.git
+.gitignore
+.github
+.gitattributes
+Dockerfile
+.dockerignore
+CNAME
+README.md
+LICENSE.md
+.DS_Store
+.vscode
+.idea
+*.log
