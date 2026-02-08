@@ -103,11 +103,22 @@ function addKeyListeners() {
 				init(1);
 			}
 			if (gameState == 2) {
-				init();
+				// after gameover, route to levels (follows full menu flow with progress etc)
 				$("#gameoverscreen").fadeOut();
+				showLevels();
 			}
 			if (gameState===0) {
 				resumeGame();
+			}
+		}
+	});
+
+	// '1' clears blocks when progress bar full (every 200 score)
+	keypress.register_combo({
+		keys: "1",
+		on_keydown: function() {
+			if (gameState == 1 && window.currentProgress >= 200) {
+				clearBlocksForSpace();
 			}
 		}
 	});
@@ -152,33 +163,37 @@ function addKeyListeners() {
 
 	if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
 			$("#restart").on('touchstart', function() {
-			init();
-			canRestart = false;
+			// after gameover restart, route back to levels menu (follows welcome/levels/progress flow)
 			$("#gameoverscreen").fadeOut();
+			showLevels();
+			canRestart = false;
 		});
 
 	}
 	else {
 		$("#restart").on('mousedown', function() {
-			init();
-			canRestart = false;
+			// after gameover restart, route back to levels menu (follows welcome/levels/progress flow)
 			$("#gameoverscreen").fadeOut();
+			showLevels();
+			canRestart = false;
 		});
 
 	}
 	if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
 			$("#restartBtn").on('touchstart', function() {
-			init(1);
-			canRestart = false;
+			// after gameover restart, route back to levels menu (follows welcome/levels/progress flow)
 			$("#gameoverscreen").fadeOut();
+			showLevels();
+			canRestart = false;
 		});
 
 	}
 	else {
 		$("#restartBtn").on('mousedown', function() {
-			init(1);
-			canRestart = false;
+			// after gameover restart, route back to levels menu (follows welcome/levels/progress flow)
 			$("#gameoverscreen").fadeOut();
+			showLevels();
+			canRestart = false;
 		});
 
 
