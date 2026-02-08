@@ -431,6 +431,160 @@ body {
 	-ms-user-select:none;
 	user-select:none;
 }
+
+.screen {
+	height:100%;
+	width:100%;
+	z-index:3001;
+	position:fixed;
+	top:0;
+	margin:0;
+	font-size:15px;
+	text-align:center;
+	display:none;
+	color:#232323;
+	background-color:rgba(236,240,241,1);
+}
+
+.welcomeContainer, .levelsContainer {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	-webkit-transform: translate(-50%, -50%);
+	-moz-transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%);
+	width: 80%;
+	max-width: 400px;
+}
+
+#welcomeTitle {
+	font-size: 8vmin;
+	color: #2ecc71;
+	margin-bottom: 40px;
+	font-weight: bold;
+}
+
+.menuBtn {
+	background-color: #2c3e50;
+	color: #ecf0f1;
+	padding: 15px 30px;
+	font-size: 5vmin;
+	border-radius: 10px;
+	cursor: pointer;
+	margin: 10px auto;
+	width: 70%;
+	max-width: 300px;
+}
+
+#levelsHeader {
+	font-size: 6vmin;
+	color: #2c3e50;
+	margin-bottom: 20px;
+	font-weight: bold;
+}
+
+#levelsList {
+	height: 50vh;
+	overflow-y: auto;
+	background-color: #ecf0f1;
+	border: 2px solid #bdc3c7;
+	border-radius: 10px;
+	padding: 10px;
+	margin-bottom: 20px;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-around;
+	align-content: flex-start;
+}
+
+.level-item {
+	width: 30%;
+	margin: 5px;
+	padding: 15px 10px;
+	background-color: #2ecc71;
+	color: white;
+	border-radius: 8px;
+	cursor: pointer;
+	font-size: 4vmin;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+}
+
+.level-item.locked {
+	background-color: #95a5a6;
+	cursor: default;
+}
+
+.level-item.locked::after {
+	content: '🔒';
+	position: absolute;
+	font-size: 2vmin;
+	top: 5px;
+	right: 5px;
+}
+
+.level-item.completed {
+	background-color: #2ecc71;
+}
+
+#backToWelcomeBtn {
+	background-color: #2c3e50;
+	color: #ecf0f1;
+	padding: 15px 30px;
+	font-size: 5vmin;
+	border-radius: 10px;
+	cursor: pointer;
+	margin: 10px auto;
+	width: 70%;
+	max-width: 300px;
+}
+
+.completeContainer {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	-webkit-transform: translate(-50%, -50%);
+	-moz-transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%);
+	width: 80%;
+	max-width: 400px;
+	text-align: center;
+}
+
+#completeTitle {
+	font-size: 7vmin;
+	color: #2ecc71;
+	margin-bottom: 20px;
+}
+
+#completeLevelNum {
+	font-size: 6vmin;
+	color: #2c3e50;
+	margin-bottom: 10px;
+}
+
+#completeScore {
+	font-size: 5vmin;
+	color: #2c3e50;
+	margin-bottom: 30px;
+}
+
+#nextLevelBtn, #replayLevelBtn {
+	background-color: #2c3e50;
+	color: #ecf0f1;
+	padding: 15px 30px;
+	font-size: 5vmin;
+	border-radius: 10px;
+	cursor: pointer;
+	margin: 10px auto;
+	width: 70%;
+	max-width: 300px;
+}
+
 #afterhr {
 	margin:0;
 	padding:0;

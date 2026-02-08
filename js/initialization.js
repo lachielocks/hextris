@@ -120,7 +120,13 @@ function initialize(a) {
 			highscores = [];
 		}
 	}
+	// level progress saved in localStorage, default only level 1 unlocked
+	window.currentLevel = 1;
+	window.maxUnlockedLevel = parseInt(localStorage.getItem('maxUnlockedLevel')) || 1;
 	window.blocks = [];
+	// progress for bar (stays full green after 200 until '1' pressed; resets every 200)
+	window.progressCounter = 0;
+	window.barFull = false;
 	window.MainHex;
 	window.gdx = 0;
 	window.gdy = 0;
@@ -133,7 +139,7 @@ function initialize(a) {
 	window.importedHistory = undefined;
 	window.startTime = undefined;
 	window.gameState;
-	setStartScreen();
+	showWelcome();
 	if (a != 1) {
 		window.canRestart = 1;
 		window.onblur = function(e) {
@@ -141,7 +147,7 @@ function initialize(a) {
 				pause();
 			}
 		};
-		$('#startBtn').off();
+		$('#startBtn').off().hide();
 		if (settings.platform == 'mobile') {
 			$('#startBtn').on('touchstart', startBtnHandler);
 		} else {
@@ -175,6 +181,16 @@ function initialize(a) {
 		document.addEventListener("pause", handlePause, false);
 		document.addEventListener("backbutton", handlePause, false);
 		document.addEventListener("menubutton", handlePause, false); //menu button on android
+
+		$('#welcomeStartBtn').off().on('click', function() {
+			showLevels();
+		});
+		$('#backToWelcomeBtn').off().on('click', function() {
+			showWelcome();
+		});
+		// complete screen buttons
+		$('#nextLevelBtn').off().on('click', nextLevel);
+		$('#replayLevelBtn').off().on('click', replayLevel);
 
 		setTimeout(function() {
 			if (settings.platform == "mobile") {
@@ -289,4 +305,179 @@ function handleClickBefore(e) {
 		showHelp();
 		return;
 	}
+}
+
+function getLevelTarget(level) {
+	return 250 * (level + 1);
+}
+
+function saveLevelProgress() {
+	localStorage.setItem('maxUnlockedLevel', maxUnlockedLevel);
+}
+
+function renderLevelsList() {
+	var list = $('#levelsList');
+	list.empty();
+	for(var i = 1; i <= 100; i++) {
+		var item = $('<div class="level-item">' + i + '</div>');
+		if (i > maxUnlockedLevel) {
+			item.addClass('locked');
+		} else {
+			item.on('click', (function(lvl) {
+				return function() {
+					startLevel(lvl);
+				};
+			})(i));
+		}
+		list.append(item);
+	}
+	list.scrollTop(0);
+}
+
+function showWelcome() {
+	hideAllScreens();
+	$('#welcomeScreen').fadeIn(150, "linear");
+	$('#startBtn').hide();
+	init();
+	gameState = 0;
+	requestAnimFrame(animLoop);
+}
+
+function showLevels() {
+	hideAllScreens();
+	$('#levelsScreen').fadeIn(150, "linear");
+	renderLevelsList();
+	gameState = 0;
+	requestAnimFrame(animLoop);
+}
+
+function hideAllScreens() {
+	$('#welcomeScreen').fadeOut(150);
+	$('#levelsScreen').fadeOut(150);
+	$('#helpScreen').fadeOut(150);
+	$('#gameoverscreen').fadeOut(150);
+	$('#levelCompleteScreen').fadeOut(150);
+	$('#overlay').fadeOut(150);
+	$('#buttonCont').fadeOut(150);
+	$('.helpText').fadeOut(150);
+	updateLevelDisplay(false);
+}
+
+function startLevel(level) {
+	currentLevel = level;
+	hideAllScreens();
+	setTimeout(function() {
+		if (settings.platform == "mobile") {
+			try {
+				document.body.removeEventListener('touchstart', handleTapBefore, false);
+			} catch (e) {}
+			try {
+				document.body.removeEventListener('touchstart', handleTap, false);
+			} catch (e) {}
+			document.body.addEventListener('touchstart', handleTap, false);
+		} else {
+			try {
+				document.body.removeEventListener('mousedown', handleClickBefore, false);
+			} catch (e) {}
+			try {
+				document.body.removeEventListener('mousedown', handleClick, false);
+			} catch (e) {}
+			document.body.addEventListener('mousedown', handleClick, false);
+		}
+	}, 5);
+	if (!canRestart) return false;
+	// always full init for fresh level start (after complete or menu)
+	init(1);
+	checkVisualElements(0);
+	updateLevelDisplay(true);
+}
+
+function completeLevelIfQualified() {
+	var target = getLevelTarget(currentLevel);
+	if (score >= target) {
+		if (currentLevel + 1 > maxUnlockedLevel) {
+			maxUnlockedLevel = currentLevel + 1;
+			saveLevelProgress();
+		}
+		showLevelComplete();
+	}
+}
+
+function showLevelComplete() {
+	// stop game, clear save, dim canvas, show complete banner
+	gameState = 0;
+	clearSaveState();
+	importing = 0;
+	hideAllScreens();
+	var c = document.getElementById("canvas");
+	c.className = "blur";
+	$('#pauseBtn').hide();
+	$('#restartBtn').hide();
+	$('#levelCompleteScreen').fadeIn(150, "linear");
+	$('#completeLevelNum').text('LEVEL ' + currentLevel);
+	$('#completeScore').text('SCORE: ' + score);
+	// handlers set once in init
+}
+
+function updateLevelDisplay(show) {
+	if (show) {
+		$('#currentLevelNum').text(currentLevel);
+		$('#levelDisplay').show();
+		$('#progressContainer').show();
+		window.barFull = false;
+		window.progressCounter = 0;
+		window.currentProgress = 0;
+		updateProgressBar();
+	} else {
+		$('#levelDisplay').hide();
+		$('#progressContainer').hide();
+	}
+}
+
+function nextLevel() {
+	var next = currentLevel + 1;
+	if (next > 100) next = 100;
+	startLevel(next);
+}
+
+function replayLevel() {
+	startLevel(currentLevel);
+}
+
+function updateProgressBar() {
+	// progress fills/stays green after 200 until '1'; resets after clear
+	var mod = window.progressCounter % 200;
+	if (mod === 0 && window.progressCounter > 0) {
+		window.barFull = true;
+	} else if (!window.barFull) {
+		window.currentProgress = mod; // temp for calc
+	}
+	if (window.barFull) {
+		window.currentProgress = 200; // force stay full
+	} else {
+		window.currentProgress = mod;
+	}
+	// if full, stay 100% until cleared
+	var percent = (window.currentProgress / 200) * 100;
+	$('#progressBar').css('width', percent + '%');
+}
+
+function clearBlocksForSpace() {
+	// clear all falling/settled blocks to make space (called on '1' when bar full)
+	blocks = [];
+	for (var i = 0; i < MainHex.blocks.length; i++) {
+		MainHex.blocks[i] = [];
+	}
+	// bomb effect: boom text at center
+	if (MainHex) {
+		MainHex.texts.push(new Text(trueCanvas.width / 2, trueCanvas.height / 2 - 50, "💣 BOOM!", "bold 40px", "#e74c3c", fadeUpAndOut));
+	}
+	window.barFull = false;
+	window.progressCounter = 0;
+	window.currentProgress = 0;
+	updateProgressBar();
+	// slight delay for visual
+	setTimeout(function() {
+		if (gameState == 1) updateProgressBar();
+	}, 100);
 }

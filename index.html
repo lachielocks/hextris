@@ -74,6 +74,29 @@
 		<div id="helpScreen" class='unselectable'>
 			<div id='inst_main_body'></div>
 		</div>
+		<div id="welcomeScreen" class='unselectable screen'>
+			<div class="welcomeContainer">
+				<div id="welcomeTitle">Welcome to Hextris</div>
+				<div id="welcomeStartBtn" class="menuBtn">Start</div>
+			</div>
+		</div>
+		<div id="levelsScreen" class='unselectable screen'>
+			<div class="levelsContainer">
+				<div id="levelsHeader">Select Level</div>
+				<div id="levelsList" class="levelsScroll"></div>
+				<div id="backToWelcomeBtn" class="menuBtn">Back</div>
+			</div>
+		</div>
+		<!-- level complete screen -->
+		<div id="levelCompleteScreen" class='unselectable screen'>
+			<div class="completeContainer">
+				<div id="completeTitle" class="GOTitle">LEVEL COMPLETE!</div>
+				<div id="completeLevelNum"></div>
+				<div id="completeScore"></div>
+				<div id="nextLevelBtn" class="menuBtn">NEXT LEVEL</div>
+				<div id="replayLevelBtn" class="menuBtn">REPLAY</div>
+			</div>
+		</div>
 		<img id="openSideBar" class='helpText' src="./images/btn_help.svg"/>
 		<div class="faded overlay"></div>
 		<img id="pauseBtn" src="./images/btn_pause.svg"/>
@@ -83,6 +106,12 @@
 		</script>
 		<div id='highScoreInGameText'>
 			<div id='highScoreInGameTextHeader'>HIGH SCORE</div><div id='currentHighScore'>10292</div>
+		</div>
+		<!-- level display on top during gameplay -->
+		<div id="levelDisplay" style="position:absolute; top:10px; left:10px; font-family:Exo; font-size:2.5vmin; color:#2c3e50; z-index:200; display:none;">LEVEL <span id="currentLevelNum">1</span></div>
+		<!-- progress bar on top: fills green every 200 score; press 1 to clear blocks when full -->
+		<div id="progressContainer" style="position:absolute; top:70px; left:50%; width:50%; max-width:400px; height:8px; background:#bdc3c7; border-radius:4px; overflow:hidden; transform:translateX(-50%); z-index:200; display:none;">
+			<div id="progressBar" style="height:100%; width:0%; background:#2ecc71; transition:width 0.3s linear;"></div>
 		</div>
 		<div id="gameoverscreen">
 			<div id='container'>

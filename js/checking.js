@@ -81,4 +81,6 @@ function consolidateBlocks(hex,side,index){
 	hex.texts.push(new Text(hex.x,hex.y,"+ "+adder.toString(),"bold Q ",deletedBlocks[0].color,fadeUpAndOut));
 		hex.lastColorScored = deletedBlocks[0].color;
 	score += adder;
+	window.progressCounter += adder; // accumulate for bar fill (200 per cycle)
+	updateProgressBar();
 }

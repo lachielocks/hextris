@@ -71,6 +71,7 @@ function resumeGame() {
 	}, 7000);
 
 	checkVisualElements(0);
+	updateLevelDisplay(true);
 }
 
 function checkVisualElements(arg) {
@@ -211,20 +212,8 @@ function exportHistory() {
 }
 
 function setStartScreen() {
-	$('#startBtn').show();
-	init();
-	if (isStateSaved()) {
-		importing = 0;
-	} else {
-		importing = 1;
-	}
-
-	$('#pauseBtn').hide();
-	$('#restartBtn').hide();
-	$('#startBtn').show();
-
-	gameState = 0;
-	requestAnimFrame(animLoop);
+	// now shows welcome page instead of original start button
+	showWelcome();
 }
 
 var spd = 1;
@@ -247,11 +236,16 @@ function animLoop() {
 			else{
 				MainHex.delay--;
 			}
+			// check after update if target reached; stop and show complete (before possible overflow)
+			if (score >= getLevelTarget(currentLevel)) {
+				completeLevelIfQualified();
+			}
 		}
 
 		lastTime = now;
 
-		if (checkGameOver() && !importing) {
+		// skip gameover check if level completed this frame
+		if (gameState === 1 && checkGameOver() && !importing) {
 			var saveState = localStorage.getItem("saveState") || "{}";
 			saveState = JSONfn.parse(saveState);
 			gameState = 2;

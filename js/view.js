@@ -18,6 +18,10 @@ function renderText(x, y, fontSize, color, text, font) {
 }
 
 function drawScoreboard() {
+	// skip texts if any menu/complete screen visible
+	if ($('#welcomeScreen').is(':visible') || $('#levelsScreen').is(':visible') || $('#levelCompleteScreen').is(':visible')) {
+		return;
+	}
 	if (scoreOpacity < 1) {
 		scoreOpacity += 0.01;
 		textOpacity += 0.01;
@@ -159,6 +163,7 @@ function gameOverDisplay() {
 	$("#socialShare").fadeIn();
 	$("#restart").fadeIn();
     set_score_pos();
+	updateLevelDisplay(false);
 }
 
 function updateHighScores (){
