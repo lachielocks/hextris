@@ -31,30 +31,9 @@
 	-ms-transform:translate(-50%, -50%);
     display:none;
 }
-.tweet {
-	font-size:2rem;
-	color:#4099FF;
-}
-@media only screen and (min-device-width:320px) and (max-device-width:480px) {
-	.tweet{
-		font-size:1rem;
-	}
-}
 a {
 	color:#232323;
 }
-.navbar {
-	width:80%;
-	margin:0 auto;
-	padding:2.5vmin 0;
-	text-align:center;
-}
-.navbar li {
-	display:inline-block;
-	text-align:center;
-	width:calc(33% - 1.25vmin);
-}
-
 #title {
 	color:#ecf0f1;
 	font-size:6vmin;
@@ -293,30 +272,13 @@ button:focus {
 	text-align:center;
 }
 
-#buttonCont {
-	position:absolute; 
-	left:50%;
-	width:310px;
-	margin-left:-8px;
-	transform:translate(-50%, 0%);
-	-webkit-transform:translate(-50%, 0%);
-	-moz-transform:translate(-50%, 0%);
-	-ms-transform:translate(-50%, 0%);
-}
-
 @media only screen and (orientation:landscape) {
-	#buttonCont {
-		bottom:calc(50vh - 19vh - 36px);
-	}
 	#container {
 		top:calc(50vh - 11vh);
 	}
 }
 
 @media only screen and (orientation:portrait) {
-	#buttonCont {
-		bottom:calc(50vh - 19vw - 36px);
-	}
 	#container {
 		top:calc(50vh - 11vw);
 	}
@@ -338,21 +300,6 @@ button:focus {
 		margin-top:-20%;
 	}
 
-	#buttonCont {
-		width:280px;
-	}
-
-	@media only screen and (orientation:landscape) {
-		#buttonCont {
-			bottom:119px;
-		}
-	}
-
-	@media only screen and (orientation:portrait) {
-		#buttonCont {
-			bottom:119px;
-		}
-	}
 }
 .blur {
 	opacity:0.1;
@@ -406,21 +353,6 @@ body {
 	-moz-transform:translate(-50%, 0%);
 	-ms-transform:translate(-50%, 0%);
 	margin-bottom:-3.5px;
-}
-
-#socialShare{
-	display:none;
-	margin:0;
-	padding:0;
-	bottom:0;
-	margin-bottom: 6.5px;
-	position:absolute;
-	left:calc(50% + 30px);
-	transform:translate(-50%, 0%);
-	-webkit-transform:translate(-50%, 0%);
-	-moz-transform:translate(-50%, 0%);
-	-ms-transform:translate(-50%, 0%);
-    padding-bottom: 2px;
 }
 
 .unselectable {
@@ -494,34 +426,3 @@ body {
 	bottom:0px;
 }
 
-#androidBadge {
-	position:absolute;
-	height:41px;
-	margin-top:5px;
-	left:calc(50% - 66px);
-	transform:translate(calc(-50% - 4px), -1px);
-	-webkit-transform:translate(calc(-50% - 4px), -1px);
-	-moz-transform:translate(calc(-50% - 4px), -1px);
-	-ms-transform:translate(calc(-50% - 4px), -1px);
-}
-
-#iOSBadge {
-	margin-top:5px;
-	position:absolute;
-	left:calc(50% + 65px);
-	transform:translate(calc(-50% - 4px), 0%);
-	-webkit-transform:translate(calc(-50% - 4px), 0%);
-	-moz-transform:translate(calc(-50% - 4px), 0%);
-	-ms-transform:translate(calc(-50% - 4px), 0%);
-}
-
-#authors {
-	position:absolute;
-	width:200px;
-	bottom:0px;
-	left:50%;
-	transform:translate(-50%, 0%);
-	-webkit-transform:translate(-50%, 0%);
-	-moz-transform:translate(-50%, 0%);
-	-ms-transform:translate(-50%, 0%);
-}
