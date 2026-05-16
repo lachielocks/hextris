@@ -346,6 +346,7 @@ function checkGameOver() {
 }
 
 function showHelp() {
+	removeLegacyPromoUI();
 	if ($('#openSideBar').attr('src') == './images/btn_back.svg') {
 		$('#openSideBar').attr('src', './images/btn_help.svg');
 	} else {

@@ -337,7 +337,7 @@ body {
 }
 
 #gameoverscreen {
-	/*display:none;*/
+	display:none;
 }
 
 #restart{

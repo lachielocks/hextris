@@ -1,6 +1,14 @@
 $(document).ready(function() {
+	removeLegacyPromoUI();
 	initialize();
 });
+
+function removeLegacyPromoUI() {
+	$('#buttonCont, #socialShare, #badges, #fork-ribbon, .rrssb-buttons').remove();
+	$('.rrssb-facebook, .rrssb-twitter, .rrssb-email, .rrssb-vk').remove();
+	$('#gameoverscreen').hide();
+}
+
 function initialize(a) {
 	window.rush = 1;
 	window.lastTime = Date.now();
@@ -132,6 +140,7 @@ function initialize(a) {
 	window.importedHistory = undefined;
 	window.startTime = undefined;
 	window.gameState;
+	removeLegacyPromoUI();
 	setStartScreen();
 	if (a != 1) {
 		window.canRestart = 1;

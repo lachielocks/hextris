@@ -128,6 +128,7 @@ function hideText() {
 }
 
 function gameOverDisplay() {
+	removeLegacyPromoUI();
 	settings.ending_block=false;
 	Cookies.set("visited",true);
 	var c = document.getElementById("canvas");
