@@ -1,16 +1,3 @@
-Hextris
-==========
+I found this game, adapted it and made it my own. It's actually really fun and addictive lol.
 
-An addictive puzzle game inspired by Tetris.
-
-# About
-
-Hextris is an open-source puzzle game. This version is maintained by [Lachie Thurlow](https://lachiethurlow.com).
-
-# Contributions
-
-Pull requests are welcome.
-
-## License
-
-This work is under a GPL v3 license.
+This project is licensed under MIT, so use it however you want.
